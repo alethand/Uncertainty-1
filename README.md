@@ -19,7 +19,7 @@ git push origin <name> # after you have add and commit your contribution, don't 
 
 - Go to the root path
 
-```cmd
+```bash
 conda create -n <name> python=2.7 # create virtual environment with python 2.7 interpreter
 conda activate <name>
 conda install --file=requirement.txt # install external package listed in requrement.txt file
