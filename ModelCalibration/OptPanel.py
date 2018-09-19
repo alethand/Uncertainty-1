@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 from __future__ import print_function
+import thread
 
+import time
+
+import sys
+import wx
 import wx.xrc
 import wx.lib.newevent
 from wx import grid
@@ -13,6 +18,7 @@ import commonTag
 
 from ShowNotebook import *
 import Sql
+import cPickle
 
 sym1=1
 class OptPanel(wx.Panel):
@@ -363,7 +369,7 @@ class OptPanel(wx.Panel):
         if self.sym == 1:
             print(self.n_id)
             metamodel = Sql.selectMetaModel(self.n_id,"svr")
-            GenericAlgorithm.GA(self, metamodel, pn, itn, cp, mp)
+            GenericAlgorithm.GA(self,metamodel, pn, itn, cp, mp)
             print("------")
         elif self.sym == 2:
             metamodel = Sql.selectMetaModel(self.n_id, "gpr")

@@ -5,9 +5,15 @@
 ###########################################################################
 from __future__ import print_function
 from __future__ import print_function
+import thread
 
+import time
+
+import sys
+import wx
 import wx.xrc
 import wx.lib.newevent
+from pandas._libs import json
 from wx import grid
 from wx.lib.mixins.listctrl import TextEditMixin
 
@@ -16,6 +22,7 @@ import commonTag
 from ModelCalibration.BuildMetaModel import importData
 
 from ShowNotebook import *
+import Sql
 
 sym1=1
 class MetaPanel(wx.Panel):
@@ -230,11 +237,11 @@ class MetaPanel(wx.Panel):
         #sizer.Add(self.sw, flag=wx.EXPAND, proportion=wx.EXPAND)
         BuildMetaModel.importDataSource(self.n_id)
         if self.sym == 1:
-            self.svr = BuildMetaModel.buildSVR(self, BuildMetaModel.cog_p, BuildMetaModel.inh_p, BuildMetaModel.output1, BuildMetaModel.input_v1, self.n_id)#, cus_C, cus_epsilon, cus_kernel)
+            self.svr = BuildMetaModel.buildSVR(self, BuildMetaModel.cog_p, BuildMetaModel.inh_p, BuildMetaModel.output1, BuildMetaModel.input_v1,self.n_id)#, cus_C, cus_epsilon, cus_kernel)
         elif self.sym == 2:
-            self.gpr = BuildMetaModel.buildGPR(self, BuildMetaModel.cog_p, BuildMetaModel.inh_p, BuildMetaModel.output1, BuildMetaModel.input_v1, self.n_id)#, cus_alpha)
+            self.gpr = BuildMetaModel.buildGPR(self, BuildMetaModel.cog_p, BuildMetaModel.inh_p, BuildMetaModel.output1, BuildMetaModel.input_v1,self.n_id)#, cus_alpha)
         else:
-            self.bayes = BuildMetaModel.buildKRR(self, BuildMetaModel.cog_p, BuildMetaModel.inh_p, BuildMetaModel.output1, BuildMetaModel.input_v1, self.n_id)#, cus_n_iter, cus_tol)
+            self.bayes = BuildMetaModel.buildKRR(self, BuildMetaModel.cog_p, BuildMetaModel.inh_p, BuildMetaModel.output1, BuildMetaModel.input_v1,self.n_id)#, cus_n_iter, cus_tol)
 
         show_panel.Layout()
 

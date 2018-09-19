@@ -10,8 +10,10 @@ import wx.grid
 import wx.lib.scrolledpanel as scrolled
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
-
+import MetaPanel
+import OptPanel
 # from UncertaintyPropagation.UPSelectMethodPanel import EditMixin
+import Sql
 
 sym1=1
 class ShowNotebook(aui.AuiNotebook):
@@ -167,7 +169,7 @@ class ShowNotebook(aui.AuiNotebook):
             pageFocus.SetFocus()
             self.Refresh()
         else:
-            self.show_panel2 = ModelCalibration.MetaPanel(self, self.sym, cp.n_id)
+            self.show_panel2 = MetaPanel.MetaPanel(self,self.sym,cp.n_id)
             self.AddPage(self.show_panel2, u"元模型建模", True, wx.NullBitmap)
         # self.show_panel = scrolled.ScrolledPanel(self, -1,
         #                                            style=wx.TAB_TRAVERSAL | wx.SUNKEN_BORDER, name="panel1")
@@ -339,7 +341,7 @@ class ShowNotebook(aui.AuiNotebook):
             pageFocus.SetFocus()
             self.Refresh()
         else:
-            self.show_panel3 = ModelCalibration.OptPanel(self, cp.n_id)
+            self.show_panel3 = OptPanel.OptPanel(self,cp.n_id)
             self.AddPage(self.show_panel3, u"模型优化", True, wx.NullBitmap)
             # self.show_panel = scrolled.ScrolledPanel(self, -1,
             #                                          style=wx.TAB_TRAVERSAL | wx.SUNKEN_BORDER, name="panel1")

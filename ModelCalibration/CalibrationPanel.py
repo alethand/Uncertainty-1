@@ -2,6 +2,7 @@
 
 from __future__ import division
 
+import time
 import wx
 import NavTree
 import ShowNotebook

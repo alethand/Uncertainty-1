@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import DoubleLoop
 import numpy
+import wx
 import BuildMetaModel
 
 avg_dif = list()

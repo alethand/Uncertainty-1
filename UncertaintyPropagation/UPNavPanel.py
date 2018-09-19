@@ -94,7 +94,7 @@ class NavPanel(wx.Panel):
                 parid.append(par[4])
                 partype.append(par[5])
             """"传参到抽样方法选择模块"""
-            UTN = UTNotebook.UTNotebook()
+            UTN =UTNotebook.UTNotebook()
             UTN.Para = Para(dtype, paras, parname, parid, partype, model_id)
             UTN.ShowArg(record)
 

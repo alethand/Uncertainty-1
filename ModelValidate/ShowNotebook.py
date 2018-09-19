@@ -5,14 +5,29 @@ import wx
 import wx.grid
 import wx.lib.scrolledpanel as scrolled
 import wx.lib.newevent
+from matplotlib.figure import Figure
 #from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+import commonTag
+import zhi as zi
+import pandas as pdS
 from wx import aui
 from wx import grid
+import Sql
+import config
+import ValidateDoubleLoop
+import mysql.connector
+import run as ru
+from mysql.connector import Error
+import numpy as np
+import matplotlib.pyplot as plt
+import ValidateRealModel as rm
 import ValidateBuildMetaModel as  build_meta
 import ValidateUi as cp
+from CustomedScrolledWindow import CustomedScrolledWindow as csw
 import wx.grid
-
-
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+import MetaPanel
 # from UncertaintyPropagation.UPSelectMethodPanel import EditMixin
 
 
@@ -68,7 +83,7 @@ class ShowNotebook(aui.AuiNotebook):
         if flag != 0:
             self.DeletePage(self.GetPageIndex(pageFocus))
 
-        self.show_panel2 = ModelValidate.MetaPanel(self, cp.n_id, 1)
+        self.show_panel2 = MetaPanel.MetaPanel(self,cp.n_id,1)
         title = u"仿真验证"
         self.AddPage(self.show_panel2, title, True, wx.NullBitmap)
         self.Refresh()

@@ -2,6 +2,15 @@
 # -*- coding: UTF-8 -*-
 from collections import OrderedDict
 
+# datasourse = {
+#     'host': '118.89.198.205',
+#     'user': 'certainty',
+#     'password': 'Nuaa666',
+#     'port': 3306,
+#     'database': 'work',
+#     'charset': 'utf8'
+# }
+
 datasourse = {
     'host': '127.0.0.1',
     'user': 'root',
@@ -10,15 +19,6 @@ datasourse = {
     'database': 'work',
     'charset': 'utf8'
 }
-
-# datasourse = {
-#     'host': '192.168.43.241',
-#     'user': 'root',
-#     'password': '123456',
-#     'port': 3306,
-#     'database': 'work',
-#     'charset': 'utf8'
-# }
 
 # datasourse = {
 #     'host': '192.168.43.241',

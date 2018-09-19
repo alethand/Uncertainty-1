@@ -5,6 +5,7 @@ import wx
 from wx import aui, grid
 import UPShowPanel
 import UPSelectMethodPanel
+import Sql
 import commonTag
 
 import sys
@@ -225,7 +226,7 @@ class UTNotebook(aui.AuiNotebook):
 
     def up_test(self):
         """ 传播实验展示 """
-        self.test_panel = UPShowPanel.TestPanel(self, para=self.Para, id = self.Para.model_id)
+        self.test_panel = UPShowPanel.TestPanel(self, para=self.Para ,id = self.Para.model_id)
         self.AddPage(self.test_panel, u"传播分析", True, wx.NullBitmap)
 
     # 关闭

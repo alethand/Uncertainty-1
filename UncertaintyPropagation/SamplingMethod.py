@@ -60,12 +60,12 @@ class MonteCarloSampling(SamplingMethod):
                    + str(parm[0]) + ')**2.0/(2.0*' + str(parm[1]) + '))'
             # print expression
             # 利用3σ准则确定上下界
-            return MenteCarloMethod.getSample(expression, parm[0] - 3 * parm[1], parm[0] + 3 * parm[1], size)
+            return MenteCarloMethod.getSample(expression, parm[0]-3*parm[1], parm[0]+3*parm[1], size)
         elif type == self.exponential:
             expression = '1.0/' + str(parm[0]) + '*np.e**(-1.0*x/' + str(parm[0]) + ')'
             # print expression
             # x落入(0, 5θ)的概率为1-e**(-5) (0.9933)
-            return MenteCarloMethod.getSample(expression, 0, 5 * parm[0], size)
+            return MenteCarloMethod.getSample(expression, 0, 5*parm[0], size)
 
 # 具体策略类
 class Context(object):

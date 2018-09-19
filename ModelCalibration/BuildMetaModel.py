@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import numpy
+import sys
+from wx.lib.mixins.listctrl import TextEditMixin
 
+import RealModel as rm
 import RealModel_NEW as rm_new
 import DoubleLoop
 from sklearn import svm
@@ -8,6 +11,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor as GPR
 from sklearn.kernel_ridge import KernelRidge as KRR
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
+import matplotlib.pyplot as plt
 from sklearn.gaussian_process.kernels import (RBF, Matern, RationalQuadratic, DotProduct,ConstantKernel)
 import GetSample as gs
 import wx
