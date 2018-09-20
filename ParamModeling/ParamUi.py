@@ -25,11 +25,11 @@ class ParamPanel(wx.Panel):
         tabSizer.Add(self.button1, 0, wx.ALL, 5)
         self.Bind(wx.EVT_BUTTON, self.ClickParamDis, self.button1)
 
-        # self.button2 = wx.Button(self.btnPanel, wx.ID_ANY, u"数据导入",
-        #                          wx.DefaultPosition, wx.DefaultSize, 0)
-        # self.button2.SetBitmap(wx.Bitmap('icon/import.ico'))
-        # tabSizer.Add(self.button2, 0, wx.ALL, 5)
-        # self.Bind(wx.EVT_BUTTON, self.ClickImport, self.button2)
+        self.button2 = wx.Button(self.btnPanel, wx.ID_ANY, u"不确定性",
+                                 wx.DefaultPosition, wx.DefaultSize, 0)
+        self.button2.SetBitmap(wx.Bitmap('icon/import.ico'))
+        tabSizer.Add(self.button2, 0, wx.ALL, 5)
+        self.Bind(wx.EVT_BUTTON, self.click_uncertainty_set, self.button2)
         
         
         #下方导航树及展示界面panel 
@@ -72,6 +72,19 @@ class ParamPanel(wx.Panel):
 #             Sql.updateSql((dlg.GetValue(), 0), Sql.insertProj)
 #             self.navTree.updateTree()
 #         dlg.Destroy()
+
+    def click_uncertainty_set(self, event):
+        if self.navTree.GetSelection().IsOk() == True:
+            n_id = self.navTree.GetItemData(self.navTree.GetSelection())
+            if n_id != 0:
+                self.showNotebook.uncertaintyDis(n_id)
+                return
+        dlg = wx.MessageBox("请先选择一个模型", "提示", wx.OK | wx.ICON_INFORMATION)
+    #         dlg = wx.DirDialog(self,u"选择文件夹",style=wx.DD_DEFAULT_STYLE)
+    #         if dlg.ShowModal() == wx.ID_OK:
+    #             Import_file.insert_blob(project='一元非线性回归', _dir=dlg.GetPath()) #文件夹路径
+    #         dlg.Destroy()
+
 
 
          

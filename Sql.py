@@ -37,9 +37,12 @@ selectModelVars = "SELECT arg_name,arg_descr,arg_init,arg_id,arg_type FROM model
                   " and arg_type = 0 order by arg_id asc"
 
 selectModelOutputArgs = "SELECT op_name,op_descr,op_id FROM t_output_param WHERE model_id = %s order by op_id asc"
-            
-selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, arg_type," \
-            "dis_type, dis_arg FROM model_arg WHERE model_id = %s order by arg_id asc"
+#             8+7
+selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, arg_type, dis_type, dis_arg," \
+            "uncertainty_kind, measurement, cause, effect, pattern, life_time, application_scene "\
+            "FROM model_arg WHERE model_id = %s order by arg_id asc"
+# selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, arg_type," \
+#             "dis_type, dis_arg FROM model_arg WHERE model_id = %s order by arg_id asc"
 
 updateParams = "update model_arg set arg_type = %s, dis_type = %s, dis_arg = %s where arg_id = %s"
 

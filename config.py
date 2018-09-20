@@ -14,7 +14,7 @@ from collections import OrderedDict
 datasourse = {
     'host': '127.0.0.1',
     'user': 'root',
-    'password': '123456',
+    'password': 'abc',
     'port': 3306,
     'database': 'work',
     'charset': 'utf8'
@@ -61,6 +61,34 @@ arg_type_get = OrderedDict([
             (0, '自变量'),
             (1, '固有不确定性参数'),
             (2, '认知不确定性参数')])
+
+uncertaintyKind = OrderedDict([
+    (0, '参数不确定性'),
+    (1, '耦合不确定性'),
+    (2, '状态转移不确定性'),
+    (3, '海洋环境不确定性'),
+    (4, '作战态势不确定性'),
+    (5, '人为因素不确定性'),
+    (6, '测试的不确定性'),
+    (7, '评估的不确定性')
+])
+
+measurement = OrderedDict([
+    (0, '数值概率'),
+    (1, '分布概率'),
+    (2, '区间度量'),
+    (3, '证据理论'),
+    (4, '可能性理论'),
+    (5, '模糊集'),
+    (6, '凸模型方法')
+])
+
+pattern = OrderedDict([
+    (0, '持续的'),
+    (1, '周期的'),
+    (2, '不定时发生的'),
+    (3, '短暂的/瞬间的')
+])
 
 arg_type_set = {
     '自变量': 0,
