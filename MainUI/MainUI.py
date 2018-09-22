@@ -6,6 +6,8 @@
 ##
 ## PLEASE DO "NOT" EDIT THIS FILE!
 ###########################################################################
+# import sys
+# sys.path.append('E:\\pythoncode\\Uncertainty')
 
 import wx
 from ModelManage import ModelUi

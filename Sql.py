@@ -38,13 +38,19 @@ selectModelVars = "SELECT arg_name,arg_descr,arg_init,arg_id,arg_type FROM model
 
 selectModelOutputArgs = "SELECT op_name,op_descr,op_id FROM t_output_param WHERE model_id = %s order by op_id asc"
 #             8+7
-selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, arg_type, dis_type, dis_arg," \
-            "uncertainty_kind, measurement, cause, effect, pattern, life_time, application_scene "\
+selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, " \
+               "arg_type, dis_type, dis_arg FROM model_arg WHERE model_id = %s order by arg_id asc"
+
+selectUncertainty = "SELECT arg_name, arg_id, arg_descr, uncertainty_kind, measurement, cause" \
+                    ", effect, pattern, life_time, application_scene "\
             "FROM model_arg WHERE model_id = %s order by arg_id asc"
 # selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, arg_type," \
 #             "dis_type, dis_arg FROM model_arg WHERE model_id = %s order by arg_id asc"
 
 updateParams = "update model_arg set arg_type = %s, dis_type = %s, dis_arg = %s where arg_id = %s"
+
+updateUncertainty = "update model_arg set uncertainty_kind = %s, measurement = %s, cause = %s, effect = %s, " \
+                    "pattern = %s, life_time = %s, application_scene = %s where arg_id = %s"
 
 deleteModel = "DELETE FROM t_project WHERE n_id = %s"
 
