@@ -37,6 +37,9 @@ selectModelVars = "SELECT arg_name,arg_descr,arg_init,arg_id,arg_type FROM model
                   " and arg_type = 0 order by arg_id asc"
 
 selectModelOutputArgs = "SELECT op_name,op_descr,op_id FROM t_output_param WHERE model_id = %s order by op_id asc"
+
+selectFormula = "SELECT formula_descr, formula FROM t_formula WHERE model_id = %s"
+
 #             8+7
 selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, " \
                "arg_type, dis_type, dis_arg FROM model_arg WHERE model_id = %s order by arg_id asc"
@@ -44,6 +47,8 @@ selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, " \
 selectUncertainty = "SELECT arg_name, arg_id, arg_descr, uncertainty_kind, measurement, cause" \
                     ", effect, pattern, life_time, application_scene "\
             "FROM model_arg WHERE model_id = %s order by arg_id asc"
+
+selectFormula = "SELECT formula_descr, formula FROM t_formula WHERE model_id = %s order by formula_id asc"
 # selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, arg_type," \
 #             "dis_type, dis_arg FROM model_arg WHERE model_id = %s order by arg_id asc"
 
@@ -73,6 +78,8 @@ selectArgs_2 = "SELECT arg_init FROM model_arg WHERE model_id = %s and arg_type 
 
 deleteSamplingResult = "DELETE FROM t_sampling_result WHERE r_id in "\
                        "(SELECT arg_id FROM model_arg WHERE model_id = %s)"
+
+deleteFormula = "DELETE FROM t_formula WHERE model_id = %s"
 
 model_d_Sql = "SELECT arg_name FROM model_arg ORDER BY arg_id"
 
@@ -269,6 +276,27 @@ def show_sampling_result_with_type(type, model_id, arg_id):
     cursor.close()
     conn.close()
 
+def insert_formula(model_id,fromula=[]):
+    """保存新建模型数据信息"""
+    sql = "insert into t_formula (formula_descr, formula, model_id) values(%s,%s,%s)"
+
+    db_config = config.datasourse
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        """写公式信息到数据库"""
+        for i in fromula:
+#             print i
+            i.append(model_id)
+            cursor.execute(sql, i)
+
+        conn.commit()
+    except mysql.connector.Error as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+    return True
 
 def insert_new_model(model_id,inputargs=[],vars = [],outputargs=[] ):
     """保存新建模型数据信息"""
@@ -302,7 +330,6 @@ def insert_new_model(model_id,inputargs=[],vars = [],outputargs=[] ):
         cursor.close()
         conn.close()
     return True
-
 
 def update_model(model_id,inputargs=[],vars = [],outputargs=[] ):
     """更新模型数据信息"""

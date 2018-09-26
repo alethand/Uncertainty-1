@@ -16,7 +16,7 @@ datasourse = {
     'user': 'root',
     'password': 'abc',
     'port': 3306,
-    'database': 'work',
+    'database': 'work2',
     'charset': 'utf8'
 }
 
@@ -33,9 +33,11 @@ main_file = 'test1'
 
 main_func = 'function'
 
-param_func = 'description' 
+param_func = 'description'
 
 var_func = 'descr_var'
+
+formula_func = 'formula'
 
 dis_type_get = OrderedDict([
             ('normal', '正态分布'),

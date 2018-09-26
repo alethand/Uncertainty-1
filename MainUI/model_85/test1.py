@@ -1,7 +1,7 @@
 ﻿from desc import func2
 
 def function(x=[], a=[]):
-    result = a[0] * x[0]**3
+    result = a[0] * x[0]**3 
     result += a[1] * x[1]**2 
     result += a[2] * x[2] 
     result += a[3] 
@@ -23,11 +23,11 @@ def descr_var():
     var.append(['变量3', 'x3', '无量纲']) 
     return var 
 
-def formula():
+def descr_var():
     var = []
-    var.append(['公式1', 'result = a1 * x1**3 '])
-    var.append(['公式2', 'result2 = a2 * x2**2 '])
-    var.append(['公式3', 'x3'])
+    var.append(['公式1', 'x1', '无量纲'])
+    var.append(['公式2', 'x2', '无量纲'])
+    var.append(['公式3', 'x3', '无量纲'])
     return var
 
 if __name__ == '__main__':

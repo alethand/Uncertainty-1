@@ -166,7 +166,7 @@ class ShowNotebook(aui.AuiNotebook):
         show_panel.gbSizer.SetFlexibleDirection(wx.BOTH)
         show_panel.gbSizer.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
 
-        show_panel.staticText1 = wx.StaticText(scrollPanel, wx.ID_ANY, u"请设置参数类型及分布情况：",
+        show_panel.staticText1 = wx.StaticText(scrollPanel, wx.ID_ANY, u"请设置不确定参数情况：",
                                                wx.DefaultPosition, wx.DefaultSize, 0)
         show_panel.gbSizer.Add(show_panel.staticText1, wx.GBPosition(2, 4),
                                wx.GBSpan(1, 1), wx.ALL, 5)
@@ -287,6 +287,104 @@ class ShowNotebook(aui.AuiNotebook):
         #         show_panel.Bind(wx.EVT_SIZE, self.OnReSize)
         show_panel.Bind(wx.EVT_SIZE,
                         lambda evt, show_panel=show_panel : self.OnReSize(evt, show_panel))
+
+    def formulaDis(self, pProj = 0):
+
+        self.show_panel = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition,
+                                   wx.DefaultSize, wx.TAB_TRAVERSAL)
+        modelinfo = Sql.selectSql(args=(pProj,), sql=Sql.selectModel)
+        title = u"公式展示" + u'（模型：' + modelinfo[0][0] + ')'
+        self.AddPage(self.show_panel, title, True, wx.NullBitmap)
+        show_panel = self.show_panel
+        show_panel.pid = pProj
+        show_panel.params = Sql.selectSql((pProj,), Sql.selectFormula)
+        # show_panel 的布局，只有 scrollPanel 一个元素
+        show_panel.bSizer = wx.BoxSizer(wx.VERTICAL)
+        #为实现滚动条加入 scrollPanel
+        show_panel.scrolledWindow = wx.ScrolledWindow(show_panel, wx.ID_ANY,
+                                                      wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL)
+        show_panel.scrolledWindow.SetScrollRate(5, 5)
+        scrollPanel = show_panel.scrolledWindow
+        # scrollPanel 的布局，元素为显示的控件
+        show_panel.gbSizer = wx.GridBagSizer(5, 5)
+        show_panel.gbSizer.SetFlexibleDirection(wx.BOTH)
+        show_panel.gbSizer.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
+
+        show_panel.staticText1 = wx.StaticText(scrollPanel, wx.ID_ANY, u"公式展示：",
+                                               wx.DefaultPosition, wx.DefaultSize, 0)
+        show_panel.gbSizer.Add(show_panel.staticText1, wx.GBPosition(2, 4),
+                               wx.GBSpan(1, 1), wx.ALL, 5)
+
+        show_panel.grid = grid.Grid(scrollPanel, wx.ID_ANY,
+                                    wx.DefaultPosition, wx.DefaultSize, 0)
+        # 参数表格
+        show_panel.grid.CreateGrid(len(show_panel.params), 2)
+        # set the form of every cell
+        show_panel.grid.SetDefaultCellAlignment(wx.ALIGN_CENTER, wx.ALIGN_CENTRE)
+        # set the size of 1st column
+        show_panel.grid.SetColSize(0, 200)
+        show_panel.grid.SetColSize(1, 400)
+
+        # show_panel.grid.SetColSize(3, 150)
+        # show_panel.grid.SetColSize(3, 150)
+        # -------------ADD---------------
+        show_panel.grid.SetColLabelValue(0, "公式描述")
+        show_panel.grid.SetColLabelValue(1, "公式")
+
+        # update the date from sql
+        for index in range(len(show_panel.params)):
+            show_panel.grid.SetCellValue(index, 0, show_panel.params[index][0]
+            if show_panel.params[index][0] != None else '')
+
+            show_panel.grid.SetCellValue(index, 1, show_panel.params[index][1]
+            if show_panel.params[index][1] != None else '')
+
+            show_panel.grid.SetReadOnly(index, 0)
+            show_panel.grid.SetReadOnly(index, 1)
+
+        # to be continued
+        show_panel.gbSizer.Add(show_panel.grid, wx.GBPosition(3, 4),
+                               wx.GBSpan(1, 6), wx.ALL, 5)
+
+        #分割线
+        show_panel.staticline = wx.StaticLine(show_panel, wx.ID_ANY, wx.DefaultPosition,
+                                              wx.DefaultSize, wx.LI_HORIZONTAL)
+
+        # 下方btmPanel
+        show_panel.btmPanel = wx.Panel(show_panel, wx.ID_ANY, wx.DefaultPosition,
+                                       (-1, 40), wx.TAB_TRAVERSAL)
+        show_panel.savePanel = wx.Panel(show_panel.btmPanel, wx.ID_ANY, wx.DefaultPosition,
+                                        (280, 28), wx.TAB_TRAVERSAL)
+        '''
+        show_panel.check = wx.Button(show_panel.savePanel, wx.ID_ANY, u"LL",
+                                    (105, 0), (30, 28), 0)
+        show_panel.check.Bind(wx.EVT_BUTTON, self.ShowContent)
+        '''
+        # show_panel.save = wx.Button(show_panel.savePanel, wx.ID_ANY, u"确定",
+        #                             (0, 0), (100, 28), 0)
+        # show_panel.save.Bind(wx.EVT_BUTTON, self.saveUncertainty)
+        show_panel.cancel = wx.Button(show_panel.savePanel, wx.ID_ANY, u"确定",
+                                      (70, 0), (100, 28), 0)
+        show_panel.cancel.Bind(wx.EVT_BUTTON, self.cancelUncertainty)
+
+        #         show_panel布局设置
+        scrollPanel.SetSizer(show_panel.gbSizer)
+        scrollPanel.Layout()
+        show_panel.bSizer.Add(scrollPanel, 1, wx.EXPAND |wx.ALL, 5 )
+        show_panel.bSizer.Add(show_panel.staticline, 0, wx.EXPAND |wx.ALL, 5)
+        show_panel.bSizer.Add(show_panel.btmPanel, 0, wx.EXPAND | wx.ALL, 5)
+        show_panel.SetSizer(show_panel.bSizer)
+        show_panel.Layout()
+
+        #         初始化savePanel位置
+        x, y = show_panel.btmPanel.GetSize()
+        w, h = show_panel.savePanel.GetSize()
+        show_panel.savePanel.SetPosition((x - w - 25, y - h - 5))
+
+        #         show_panel.Bind(wx.EVT_SIZE, self.OnReSize)
+        show_panel.Bind(wx.EVT_SIZE,
+                        lambda evt, show_panel=show_panel : self.OnReSize(evt, show_panel))
+
     def OnReSize(self, event, show_panel):
         show_panel.Layout()
 #         在绑定的size事件中使右下角保存panel右对齐

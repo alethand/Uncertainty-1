@@ -30,6 +30,12 @@ class ParamPanel(wx.Panel):
         self.button2.SetBitmap(wx.Bitmap('icon/import.ico'))
         tabSizer.Add(self.button2, 0, wx.ALL, 5)
         self.Bind(wx.EVT_BUTTON, self.click_uncertainty_set, self.button2)
+
+        self.button3 = wx.Button(self.btnPanel, wx.ID_ANY, u"公式展示",
+                                 wx.DefaultPosition, wx.DefaultSize, 0)
+        self.button3.SetBitmap(wx.Bitmap('icon/import.ico'))
+        tabSizer.Add(self.button3, 0, wx.ALL, 5)
+        self.Bind(wx.EVT_BUTTON, self.click_formula_set, self.button3)
         
         
         #下方导航树及展示界面panel 
@@ -84,6 +90,14 @@ class ParamPanel(wx.Panel):
     #         if dlg.ShowModal() == wx.ID_OK:
     #             Import_file.insert_blob(project='一元非线性回归', _dir=dlg.GetPath()) #文件夹路径
     #         dlg.Destroy()
+
+    def click_formula_set(self, event):
+        if self.navTree.GetSelection().IsOk() == True:
+            n_id = self.navTree.GetItemData(self.navTree.GetSelection())
+            if n_id != 0:
+                self.showNotebook.formulaDis(n_id)
+                return
+        dlg = wx.MessageBox("请先选择一个模型", "提示", wx.OK | wx.ICON_INFORMATION)
 
 
 

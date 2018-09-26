@@ -13,6 +13,9 @@ import config
 
 class ShowNotebook(aui.AuiNotebook):
 
+    # set formulas
+    formulas = []
+
     def __init__(self, parent=None):
 
         aui.AuiNotebook.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition,
@@ -46,6 +49,8 @@ class ShowNotebook(aui.AuiNotebook):
             inputparams = Sql.selectSql(args=(id,), sql=Sql.selectModelArgs)
             outparams = Sql.selectSql(args=(id,), sql=Sql.selectModelOutputArgs)
             vars = Sql.selectSql(args=(id,), sql=Sql.selectModelVars)
+            # add formulas module
+            # formulas = Sql.selectSql(args=(id,), sql=Sql.selectFormula)
 
             self.show_panel3 = wx.Panel(self, 3, wx.DefaultPosition,
                                         wx.DefaultSize, wx.TAB_TRAVERSAL)
@@ -618,6 +623,8 @@ class ShowNotebook(aui.AuiNotebook):
         Run.read_blob(proj)
         params = Run.read_param(proj, config.param_func)
         vars = Run.read_param(proj, config.var_func)
+        ShowNotebook.formulas = Run.read_param(proj, config.formula_func)
+        print ShowNotebook.formulas
         show_panel.model_id = proj
 
         scrollPanel = show_panel.scrolledWindow
@@ -726,6 +733,8 @@ class ShowNotebook(aui.AuiNotebook):
             Sql.deleteSql(args=(old_id,), sql=Sql.deleteSamplingResult)
             Sql.deleteSql(args=(old_id,), sql=Sql.deleteModelArgs)
             Sql.deleteSql(args=(old_id,), sql=Sql.deleteModelOutputArgs)
+            # add---
+            Sql.deleteSql(args=(old_id,), sql=Sql.deleteFormula)
             # Sql.deleteSql(args=(old_id,), sql=Sql.deleteModel)
 
             """保存输入参数信息到inputargs"""
@@ -750,11 +759,13 @@ class ShowNotebook(aui.AuiNotebook):
                     temp.append(outputform.GetItemText(i, j))
                 outputargs.append(temp)
             if (Sql.insert_new_model(new_id, inputargs, vars, outputargs) == True) \
-            and (Sql.updateSql((proj_name, proj_descr, new_id), Sql.updateProj) == True):
+            and (Sql.updateSql((proj_name, proj_descr, new_id), Sql.updateProj) == True)\
+            and (Sql.insert_formula(new_id, ShowNotebook.formulas) == True):
                 print '=================================修改成功1'
             self.DeletePage(self.GetPageIndex(show_panel))
 #             self.GetParent().GetParent().navTree.updateTree()
         elif new_id == -1:
+            Sql.deleteSql(args=(old_id,), sql=Sql.deleteFormula)
             """保存输入参数信息到inputargs"""
             for i in range(inputform.GetItemCount()):
                 temp = []
@@ -775,7 +786,8 @@ class ShowNotebook(aui.AuiNotebook):
                     temp.append(outputform.GetItemText(i, j))
                 outputargs.append(temp)
             if Sql.update_model(old_id, inputargs, vars, outputargs) == True \
-            and (Sql.updateSql((proj_name, proj_descr, old_id), Sql.updateProj) == True):
+            and (Sql.updateSql((proj_name, proj_descr, old_id), Sql.updateProj) == True)\
+            and (Sql.insert_formula(old_id, ShowNotebook.formulas) == True):
                 print '=================================修改成功2'
             self.DeletePage(self.GetPageIndex(show_panel))
         self.Refresh()
@@ -815,13 +827,15 @@ class ShowNotebook(aui.AuiNotebook):
                     temp.append(outputform.GetItemText(i, j))
                 outputargs.append(temp)
             if Sql.insert_new_model(model_id, inputargs, vars, outputargs) == True:
-                print '=================================新建成功'
+                if Sql.insert_formula(model_id, ShowNotebook.formulas) == True:
+                    print '=================================新建成功'
             self.DeletePage(self.GetPageIndex(show_panel))
             self.Refresh()
             # 找到最高层MainUI的Frame
             self.Parent.Parent.Parent.Parent.Parent.updateTree()
         except Exception as e:
             dlg = wx.MessageBox("请先导入模型", "提示" ,wx.OK | wx.ICON_INFORMATION)
+
 
     # 关闭
     def Cancel(self, event):
