@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-import ValidateCalculateMethod as ca
 import ValidateUi as cp
-import arg_order1 as ao
+import arg_order as ao
 from compiler.ast import flatten
 import numpy as np
 
-
+# 从这里看来是一个认知不确定行，一个固有不确定行对应所有输入变量
+# 相当于一个参数组合对所有输入变量
 def RunImportedModel(order, cog_p_r, inh_p_r, input_X):
     shape_v = input_X.shape
+    # 自变量的条数
     n = shape_v[0]
     cog_p_r_l = flatten(cog_p_r.tolist())
     inh_p_r_l = flatten(inh_p_r.tolist())
@@ -20,7 +21,8 @@ def RunImportedModel(order, cog_p_r, inh_p_r, input_X):
         tans = ao.get_result(cp.n_id, order, inp_l, inh_p_r_l, cog_p_r_l)
         rans = np.row_stack((rans, tans))
     return np.mat(rans)
-
+#一组认知不确定参数，固有不确定参数被积分，对应自变量
+#代表该次认知不确定下，所对应的模型输出
 def inner_level_loop(cog_p_r, inh_p, input_X, order=0):
     output_m = RunImportedModel(order, cog_p_r, inh_p[0], input_X)
     shape_va = inh_p.shape

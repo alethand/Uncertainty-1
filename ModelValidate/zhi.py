@@ -27,23 +27,6 @@ def Orang(dd,nn):
 
 #求上四分之一位
   fouro1,four2,fouro3 = np.percentile(array,(25,50,75))
-  #
-  # if n%4 == 0:
-  #   fouro1 = (array[n/4]+array[n/4-1])/2
-  #   fouro3 = (array[(n/2+n)/2] + array[(n/2+n)/2-1]) / 2
-  #
-  #
-  # if n%4 == 1:
-  #   fouro1 = (array[((n+1)/2+1)/2-1])
-  #   fouro3 = (array[((n+1)/2+n)/2-1])
-  #
-  # ###
-  # if n%4 == 2:
-  #   fouro1 = (array[(n/2+1)/2-1])
-  #   fouro3 = (array[(n/2+1+n)/2-1]+array[(n/2+1+n)/2])/2
-  # if n%4 == 3:
-  #   fouro1 = array[(n+1)/4-1]
-  #   fouro3 = array[3*(n + 1)/4-1]
   print "均值："
   print sumo
   print "方差："

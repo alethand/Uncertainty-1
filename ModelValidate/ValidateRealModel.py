@@ -1,81 +1,53 @@
-import numpy
-import ModelManage.Run as Run
+# -*- coding: utf-8 -*-
+import ValidateUi as cp
+import arg_order as ao
 from compiler.ast import flatten
+import numpy as np
+import Sql
 
-def run_real_model_inner(inh_p_r, input_Xi):
-    shape_v = input_Xi.shape
-    l = [4, 1, 8]
-    s = 0
-    sa = 0
-    for i in range(shape_v[1]):
-        s = s+l[i]*input_Xi[0, i]
-        sa = sa+l[i]*input_Xi[0, i]**2
+cog_p_r = 0
+# 用来形成真实数据
+# 从这里看是一个认知不确定性参数对应所有固有参数，形成最终参数组合
+# 最后输出对所有参数组合的平均值
+def run_real_model(inh_p, input_X):
+    global cog_p_r
+    args = Sql.selectSql(args=(cp.n_id,), sql=Sql.selectArgs_2)
+    arg = []
+    for Xi in args:
+        arg.append(Xi[0])
 
-    shape_va = inh_p_r.shape
-    ts = 0
-    for i in range(shape_va[1]):
-        ts = ts+inh_p_r[0, i]
+    # 认知不确定参数
+    cog_p_r = arg
+    cog_p_r = np.mat(cog_p_r)
 
-    s = s+ts
-    sa = sa+ts
-    return s, sa
 
-def run_real_model(inh_p, cog_p, input_X):
-    shape_v = input_X.shape
-    print "----------------------------"
-    print flatten(inh_p[0].tolist())
-    print flatten(cog_p[0].tolist())
-    print numpy.r_[flatten(inh_p[0].tolist()), flatten(cog_p[0].tolist())]
-    print flatten(input_X[0].tolist())
-    print Run.tryrun(76,flatten(input_X[0].tolist()),numpy.r_[flatten(cog_p[0].tolist()), flatten(inh_p[0].tolist())])
-        #float(str(round(inh_p[0],8)))
-    print "----------------------------"
+    order = ao.get_order(cp.n_id)
+    shape_inh = inh_p.shape
+    ret = RunImportedModel(order, cog_p_r, inh_p[0], input_X)
 
-    ret = Run.tryrun(76,flatten(input_X[0].tolist()),numpy.r_[flatten(inh_p[0].tolist()), flatten(cog_p[0].tolist())])
-    for i in range(shape_v[0]):
-        if i == 0:
+    for i in range(shape_inh[0]):
+        if i==0:
             continue
-        tret = Run.tryrun(76,flatten(input_X[i].tolist()),numpy.r_[flatten(inh_p[0].tolist()), flatten(cog_p[0].tolist())])
-        ret = numpy.row_stack((ret, tret))
-
-    shape_v1 = inh_p.shape
-    ret = numpy.mat(ret)
-
-    for i in range(shape_v1[0]):
-        if i == 0:
-            continue
-        shape_v = input_X.shape
-        ret_a = Run.tryrun(76,flatten(input_X[0].tolist()),numpy.r_[flatten(inh_p[i].tolist()), flatten(cog_p[0].tolist())])
-        for ia in range(shape_v[0]):
-            if ia == 0:
-                continue
-            tret = Run.tryrun(76,flatten(input_X[ia].tolist()),numpy.r_[flatten(inh_p[i].tolist()), flatten(cog_p[0].tolist())])
-            ret_a = numpy.row_stack((ret_a, tret))
-        ret_a = numpy.mat(ret_a)
-        ret = ret + ret_a
-
-    # ret = run_real_model_inner(inh_p[0], input_X[0])
-    # for i in range(shape_v[0]):
-    #     if i == 0:
-    #         continue
-    #     tret = run_real_model_inner(inh_p[0], input_X[i])
-    #     ret = numpy.row_stack((ret, tret))
-    #
-    # shape_v1 = inh_p.shape
-    # ret = numpy.mat(ret)
-    #
-    # for i in range(shape_v1[0]):
-    #     if i == 0:
-    #         continue
-    #     shape_v = input_X.shape
-    #     ret_a = run_real_model_inner(inh_p[i], input_X[0])
-    #     for ia in range(shape_v[0]):
-    #         if ia == 0:
-    #             continue
-    #         tret = run_real_model_inner(inh_p[i], input_X[ia])
-    #         ret_a = numpy.row_stack((ret_a, tret))
-    #     ret_a = numpy.mat(ret_a)
-    #     ret = ret+ret_a
-
-    ret = ret/shape_v1[0]
+        tret = RunImportedModel(order, cog_p_r, inh_p[i], input_X)
+        ret = ret + tret
+    ret = ret/shape_inh[0]
     return ret
+
+# 从这里看来是一个认知不确定行，一个固有不确定行对应所有输入变量
+# 相当于一个参数组合对所有输入变量
+# 输出对应X的模型输出，对应于一个参数组合
+def RunImportedModel(order, cog_p_r, inh_p_r, input_X):
+    shape_v = input_X.shape
+    n = shape_v[0]
+    cog_p_r_l = flatten(cog_p_r.tolist())
+    inh_p_r_l = flatten(inh_p_r.tolist())
+    inp_l = flatten(input_X[0].tolist())
+
+    rans = ao.get_result(cp.n_id, order, inp_l, inh_p_r_l, cog_p_r_l)
+    for i in range(n):
+        if i == 0:
+            continue
+        inp_l = flatten(input_X[i].tolist())
+        tans = ao.get_result(cp.n_id, order, inp_l, inh_p_r_l, cog_p_r_l)
+        rans = np.row_stack((rans, tans))
+    return np.mat(rans)
