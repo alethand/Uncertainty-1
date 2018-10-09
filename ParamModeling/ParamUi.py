@@ -20,11 +20,11 @@ class ParamPanel(wx.Panel):
         tabSizer = wx.BoxSizer(wx.HORIZONTAL)
         self.btnPanel.SetSizer(tabSizer)
 
-        self.button1 = wx.Button(self.btnPanel, wx.ID_ANY, u"参数设置",
-                                 wx.DefaultPosition, wx.DefaultSize, 0)
-        self.button1.SetBitmap(wx.Bitmap('icon/arg.ico'))
-        tabSizer.Add(self.button1, 0, wx.ALL, 5)
-        self.Bind(wx.EVT_BUTTON, self.ClickParamDis, self.button1)
+        # self.button1 = wx.Button(self.btnPanel, wx.ID_ANY, u"参数设置",
+        #                          wx.DefaultPosition, wx.DefaultSize, 0)
+        # self.button1.SetBitmap(wx.Bitmap('icon/arg.ico'))
+        # tabSizer.Add(self.button1, 0, wx.ALL, 5)
+        # self.Bind(wx.EVT_BUTTON, self.ClickParamDis, self.button1)
 
         self.button2 = wx.Button(self.btnPanel, wx.ID_ANY, u"不确定性",
                                  wx.DefaultPosition, wx.DefaultSize, 0)
