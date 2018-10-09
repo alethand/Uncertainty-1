@@ -45,6 +45,17 @@ dis_type_get = OrderedDict([
             ('exponential', '指数分布'),
             ('other', '任意分布')])
 
+dis_type_get1 = OrderedDict([
+            (0, '正态分布'),
+            (1, '均匀分布'),
+            (2, '指数分布'),
+            (3, '任意分布')])
+dis_type_reverse = OrderedDict([
+            ('正态分布', 0),
+            ('均匀分布', 1),
+            ('指数分布', 2),
+            ('任意分布', 3)])
+
 dis_type_set = {
     '正态分布': 'normal',
     '均匀分布': 'uniform',

@@ -9,11 +9,13 @@ def function(x=[], a=[]):
     result3 = result
     result += a[3]
     result4 = result
-    result = func2.func2(result)
+    result5 = func2.func2(result)
+    result=[]
     result.append(result1)
     result.append(result2)
     result.append(result3)
     result.append(result4)
+    result.append(result5)
     return result
 
 def description():

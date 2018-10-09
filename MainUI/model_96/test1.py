@@ -7,20 +7,28 @@ def function(x, a):
     dt1 = t
     dt2 = 2 * t
     dt3 = 3 * t
-    Hw = x[1]
-    vw = x[2]
-    vc = x[4]
-    Hwc = x[3]
+    # Hw = x[1]
+    # vw = x[2]
+    # vc = x[4]
+    # Hwc = x[3]
+    Hw = a[0]
+    vw = a[1]
+    vc = a[2]
+    Hwc = a[3]
     dy1 = dt1 * vw * math.sin(Hw)
     dy2 = dt2 * vw * math.sin(Hw)
     dy3 = dy2 + dt1 * vc * math.sin(Hwc)
     dx1 = dt1 * vc * math.cos(Hw)
     dx2 = dt2 * vc * math.cos(Hw)
     dx3 = dx2 + dt1 * vc * math.cos(Hwc)
-    f0 = x[5]
-    f1 = x[6]
-    f2 = x[7]
-    f3 = x[8]
+    # f0 = x[5]
+    # f1 = x[6]
+    # f2 = x[7]
+    # f3 = x[8]
+    f0 = x[1]
+    f1 = x[2]
+    f2 = x[3]
+    f3 = x[4]
     elem41 = (np.sin(f1) * dx1 - np.cos(f1) * dy1)
     elem42 = (np.sin(f2) * dx2 - np.cos(f2) * dy2)
     elem43 = (np.sin(f3) * dx3 - np.cos(f3) * dy3)
@@ -53,16 +61,17 @@ def description():
 
 def formula():
     param = []
+    param.append(['我方航向', 'Hw', '无量纲'])
+    param.append(['我方航速', 'Vw', '无量纲'])
+    param.append(['变向后我方航向', 'Hwc', '无量纲'])
+    param.append(['变向后我方航速', 'Vwc', '无量纲'])
     return param
 
 # 变量，是指模型的输入
 def descr_var():
     var = []
     var.append(['采样间隔时间', 't', '无量纲'])
-    var.append(['我方航向', 'Hw', '无量纲'])
-    var.append(['我方航速', 'Vw', '无量纲'])
-    var.append(['变向后我方航向', 'Hwc', '无量纲'])
-    var.append(['变向后我方航速', 'Vwc', '无量纲'])
+
     var.append(['第一次采样敌方方位', 'f0', '无量纲'])
     var.append(['第二次采样敌方方位', 'f1', '无量纲'])
     var.append(['第三次采样敌方方位', 'f2', '无量纲'])

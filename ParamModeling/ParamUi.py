@@ -3,6 +3,7 @@
 import wx
 import NavTree
 import ShowNotebook
+import ShowNotebook1
 
 #模型管理功能模块界面
 class ParamPanel(wx.Panel):
@@ -19,7 +20,7 @@ class ParamPanel(wx.Panel):
         tabSizer = wx.BoxSizer(wx.HORIZONTAL)
         self.btnPanel.SetSizer(tabSizer)
 
-        self.button1 = wx.Button(self.btnPanel, wx.ID_ANY, u"参数设置", 
+        self.button1 = wx.Button(self.btnPanel, wx.ID_ANY, u"参数设置",
                                  wx.DefaultPosition, wx.DefaultSize, 0)
         self.button1.SetBitmap(wx.Bitmap('icon/arg.ico'))
         tabSizer.Add(self.button1, 0, wx.ALL, 5)
@@ -31,12 +32,12 @@ class ParamPanel(wx.Panel):
         tabSizer.Add(self.button2, 0, wx.ALL, 5)
         self.Bind(wx.EVT_BUTTON, self.click_uncertainty_set, self.button2)
 
-        self.button3 = wx.Button(self.btnPanel, wx.ID_ANY, u"公式展示",
-                                 wx.DefaultPosition, wx.DefaultSize, 0)
-        self.button3.SetBitmap(wx.Bitmap('icon/import.ico'))
-        tabSizer.Add(self.button3, 0, wx.ALL, 5)
-        self.Bind(wx.EVT_BUTTON, self.click_formula_set, self.button3)
-        
+        # self.button3 = wx.Button(self.btnPanel, wx.ID_ANY, u"公式展示",
+        #                          wx.DefaultPosition, wx.DefaultSize, 0)
+        # self.button3.SetBitmap(wx.Bitmap('icon/import.ico'))
+        # tabSizer.Add(self.button3, 0, wx.ALL, 5)
+        # self.Bind(wx.EVT_BUTTON, self.click_formula_set, self.button3)
+
         
         #下方导航树及展示界面panel 
         self.displayPanel = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, 

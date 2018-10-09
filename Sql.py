@@ -49,12 +49,22 @@ selectUncertainty = "SELECT arg_name, arg_id, arg_descr, uncertainty_kind, measu
             "FROM model_arg WHERE model_id = %s order by arg_id asc"
 
 selectFormula = "SELECT formula_descr, formula FROM t_formula WHERE model_id = %s order by formula_id asc"
+
+selectInfromations = "SELECT arg_descr, arg_name, arg_unit, " \
+               "arg_type, dis_type, dis_arg , uncertainty_kind, measurement, cause," \
+                     "effect, pattern, life_time, application_scene, arg_id FROM model_arg " \
+                     "WHERE model_id = %s order by arg_id asc"
 # selectParams = "SELECT arg_name, arg_id, arg_init, arg_descr, arg_unit, arg_type," \
 #             "dis_type, dis_arg FROM model_arg WHERE model_id = %s order by arg_id asc"
 
 updateParams = "update model_arg set arg_type = %s, dis_type = %s, dis_arg = %s where arg_id = %s"
 
 updateUncertainty = "update model_arg set uncertainty_kind = %s, measurement = %s, cause = %s, effect = %s, " \
+                    "pattern = %s, life_time = %s, application_scene = %s where arg_id = %s"
+
+updateInformations = "update model_arg set arg_descr = %s, arg_name = %s, arg_unit = %s , arg_type = %s, dis_type=%s, " \
+                     "dis_arg = %s, uncertainty_kind = %s," \
+                     " measurement = %s, cause = %s, effect = %s, " \
                     "pattern = %s, life_time = %s, application_scene = %s where arg_id = %s"
 
 deleteModel = "DELETE FROM t_project WHERE n_id = %s"

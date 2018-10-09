@@ -12,12 +12,12 @@ class ParaSettingWindow(wx.Dialog):
                            title=u"分布参数设置", size=wx.Size(500, 300))
 
         self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
-        self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU))
+        # self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU))
 
         bSizer_main = wx.BoxSizer(wx.VERTICAL)
 
         self.m_panel_kind = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        self.m_panel_kind.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_SCROLLBAR))
+        # self.m_panel_kind.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_SCROLLBAR))
 
         bSizer_kind = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -39,7 +39,7 @@ class ParaSettingWindow(wx.Dialog):
         bSizer_main.Add(self.m_panel_kind, 1, wx.EXPAND | wx.ALL, 5)
 
         self.m_panel_para = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        self.m_panel_para.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_SCROLLBAR))
+        # self.m_panel_para.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_SCROLLBAR))
 
         gbSizer_para = wx.GridBagSizer(0, 0)
         gbSizer_para.SetFlexibleDirection(wx.BOTH)
@@ -81,7 +81,7 @@ class ParaSettingWindow(wx.Dialog):
         bSizer_main.Add(self.m_panel_para, 3, wx.EXPAND | wx.ALL, 5)
 
         self.m_panel_ok = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        self.m_panel_ok.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_SCROLLBAR))
+        # self.m_panel_ok.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_SCROLLBAR))
 
         gSizer_ok = wx.GridSizer(1, 4, 0, 0)
 
@@ -171,6 +171,7 @@ class ParaSettingWindow(wx.Dialog):
         self.GetParent().para_info = (self.m_textCtrl_func.GetValue() + ' '
                                       + self.m_textCtrl_p1.GetValue() + ' '
                                       + self.m_textCtrl_p2.GetValue())
+        a=self.m_textCtrl_func.GetValue()
         print(self.GetParent().para_info)
         self.Destroy()
 

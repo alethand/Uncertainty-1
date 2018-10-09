@@ -8,7 +8,7 @@ import wx.lib.newevent
 from wx import aui
 import ValidateUi as cp
 import MetaPanel
-
+import DataPanel
 
 class ShowNotebook(aui.AuiNotebook):
     def __init__(self, parent=None):
@@ -25,16 +25,30 @@ class ShowNotebook(aui.AuiNotebook):
             dlg.ShowModal()
             return
 
-        self.meta_panel = MetaPanel.MetaPanel(self, cp.n_id)
+        self.valid_panel = MetaPanel.MetaPanel(self, cp.n_id)
         title = u"仿真验证"
-        self.AddPage(self.meta_panel, title, True, wx.NullBitmap)
+        self.AddPage(self.valid_panel, title, True, wx.NullBitmap)
+        self.Bind(wx.aui.EVT_AUINOTEBOOK_PAGE_CLOSED, self.on_close)
+
+        self.Refresh()
+
+    #点击导入数据后会发生的事情
+    def end_import_data(self):
+        self.data_panel = DataPanel.DataPanel(self, cp.n_id)
+        title = u"数据概览"
+        self.AddPage(self.data_panel, title, True, wx.NullBitmap)
         self.Bind(wx.aui.EVT_AUINOTEBOOK_PAGE_CLOSED, self.on_close)
 
         self.Refresh()
 
     # 关闭的时候取消验证页面对模型的记录信息
     def on_close(self,event):
-        cp.n_id=-1
+        if self.GetPageCount()==0 :
+            cp.n_id=-1
+            cp.model_d=0
+            cp.real_d=0
+        else:
+            pass
 
 
 

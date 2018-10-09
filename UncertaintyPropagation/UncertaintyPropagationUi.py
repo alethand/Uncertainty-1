@@ -111,6 +111,7 @@ class UncertaintyPropagationPanel(wx.Panel):
             the_type = record[i][2]
             print the_type
             args = par[3].split(" ")
+            args.pop(0)
             a = []
             if the_type == 'other':
                 # 由于仅有其他分布中参数含有 字符串 ，所以单独讨论
